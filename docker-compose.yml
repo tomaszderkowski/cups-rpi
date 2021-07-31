@@ -1,0 +1,20 @@
+#docker build --network=host -t cups-pi/cups-pi .
+
+version: '3.7'
+
+services:
+  cups:
+    container_name: cups
+    image: cups-pi/cups-pi:latest
+    restart: unless-stopped
+    ports:
+      - 631:631
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+      - /dev/bus/usb:/dev/bus/usb
+    privileged: 'true'
+
+networks:
+  default:
+    external:
+      name: internal
